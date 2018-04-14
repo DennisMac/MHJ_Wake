@@ -1,1 +1,4 @@
-sceneSetups: []
+sceneSetups:
+- path: Assets/Nathans Work/scene/menu.unity
+  isLoaded: 1
+  isActive: 1
