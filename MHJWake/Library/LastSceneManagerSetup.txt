@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Nathans Work/scene/menu.unity
+- path: Assets/Wake.unity
   isLoaded: 1
   isActive: 1
