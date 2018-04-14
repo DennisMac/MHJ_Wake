@@ -1,8 +1,10 @@
-﻿Shader "Unlit/NewUnlitShader"
+﻿Shader "Water/WaterShader"
 {
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		_TintColor("Tint Color", Color) = (1,1,1,1)
+		_Transparency("Transparency", Range(0.0,0.5)) = 0.25
 	}
 	SubShader
 	{
@@ -14,8 +16,7 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			// make fog work
-			#pragma multi_compile_fog
+
 			
 			#include "UnityCG.cginc"
 
@@ -34,11 +35,19 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float4 _TintColor;
+			float _Transparency;
 			
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
+
+				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+
+				//o.vertex.y -= _SinTime.w;
+				o.vertex.y += sin(worldPos.x + _Time.w);
+
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
